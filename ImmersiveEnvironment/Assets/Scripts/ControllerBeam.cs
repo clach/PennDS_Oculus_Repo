@@ -39,7 +39,7 @@ public class ControllerBeam : MonoBehaviour {
         {
             if (hit.collider != null)
             {
-                Debug.Log(hit.transform.gameObject.name);
+                //Debug.Log(hit.transform.gameObject.name);
             }
         }
     }
