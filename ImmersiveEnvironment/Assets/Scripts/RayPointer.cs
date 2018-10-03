@@ -36,7 +36,6 @@ public class RayPointer : MonoBehaviour
     {
         if (inputModule != null)
         {
-            Debug.Log("we have an input module");
             inputModule.OnSelectionRayHit += RayHitSomething;
             joyPadClickButton = inputModule.joyPadClickButton;
         }
