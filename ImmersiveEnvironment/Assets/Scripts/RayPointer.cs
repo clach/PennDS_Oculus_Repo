@@ -27,7 +27,7 @@ public class RayPointer : MonoBehaviour
     public RayPointer.SelectionCallback onNonUISelected;
 
     protected OVRInput.Controller activeController = OVRInput.Controller.RTrackedRemote;
-    public OVRInput.Button joyPadClickButton = OVRInput.Button.PrimaryIndexTrigger;
+    public OVRInput.Button triggerButton = OVRInput.Button.PrimaryIndexTrigger;
 
     protected Transform lastHit = null;
     protected Transform triggerDown = null;
@@ -37,7 +37,7 @@ public class RayPointer : MonoBehaviour
         if (inputModule != null)
         {
             inputModule.OnSelectionRayHit += RayHitSomething;
-            joyPadClickButton = inputModule.joyPadClickButton;
+            triggerButton = inputModule.joyPadClickButton;
         }
 
         OVRInput.Controller controller = OVRInput.GetConnectedControllers();
@@ -63,7 +63,6 @@ public class RayPointer : MonoBehaviour
 
     void RayHitSomething(Vector3 hitPosition, Vector3 hitNormal)
     {
-        Debug.Log("yah the ray hit something");
         if (lineRenderer != null)
         {
             lineRenderer.SetPosition(1, hitPosition);
@@ -76,7 +75,7 @@ public class RayPointer : MonoBehaviour
 
         if ((controller & OVRInput.Controller.RTouch) == OVRInput.Controller.RTouch)
         {
-            if (OVRInput.Get(joyPadClickButton, OVRInput.Controller.RTouch))
+            if (OVRInput.Get(triggerButton, OVRInput.Controller.RTouch))
             {
                 activeController = OVRInput.Controller.RTouch;
                 return;
@@ -85,7 +84,7 @@ public class RayPointer : MonoBehaviour
 
         if ((controller & OVRInput.Controller.LTouch) == OVRInput.Controller.LTouch)
         {
-            if (OVRInput.Get(joyPadClickButton, OVRInput.Controller.LTouch))
+            if (OVRInput.Get(triggerButton, OVRInput.Controller.LTouch))
             {
                 activeController = OVRInput.Controller.LTouch;
                 return;
@@ -184,11 +183,11 @@ public class RayPointer : MonoBehaviour
             // pressed AND released while hovering over the object.
             if (activeController != OVRInput.Controller.None)
             {
-                if (OVRInput.GetDown(joyPadClickButton, activeController))
+                if (OVRInput.GetDown(triggerButton, activeController))
                 {
                     triggerDown = lastHit;
                 }
-                else if (OVRInput.GetUp(joyPadClickButton, activeController))
+                else if (OVRInput.GetUp(triggerButton, activeController))
                 {
                     if (triggerDown != null && triggerDown == lastHit)
                     {
@@ -198,7 +197,7 @@ public class RayPointer : MonoBehaviour
                         }
                     }
                 }
-                if (!OVRInput.Get(joyPadClickButton, activeController))
+                if (!OVRInput.Get(triggerButton, activeController))
                 {
                     triggerDown = null;
                 }
